@@ -23,25 +23,6 @@ func coolifyTextIfPossible(plainText string) string {
 		return plainText
 	}
 
-	coolifiedText, _ := coolifyText(plainText)
-	return coolifiedText
-}
-
-func canCoolify(plainText string) bool {
-	for _, r := range plainText {
-		if isVowel(r) {
-			return true
-		}
-	}
-
-	return false
-}
-
-func coolifyText(plainText string) (string, error) {
-	if !canCoolify(plainText) {
-		return "", fmt.Errorf("cannot coolify %s because it has no vowels\n", plainText)
-	}
-
 	for {
 		for i, r := range plainText {
 			if !isVowel(r) {
@@ -52,12 +33,22 @@ func coolifyText(plainText string) (string, error) {
 			}
 
 			if wantToDuplicateVowelThanRemove() {
-				return duplicateVowel(plainText, i), nil
+				return duplicateVowel(plainText, i)
 			}
 
-			return removeVowel(plainText, i), nil
+			return removeVowel(plainText, i)
 		}
 	}
+}
+
+func canCoolify(plainText string) bool {
+	for _, r := range plainText {
+		if isVowel(r) {
+			return true
+		}
+	}
+
+	return false
 }
 
 func isVowel(r rune) bool {
