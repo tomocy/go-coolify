@@ -13,9 +13,17 @@ func main() {
 	rand.Seed(time.Now().UTC().UnixNano())
 	scanner := bufio.NewScanner(os.Stdin)
 	for scanner.Scan() {
-		text := coolifyTextIfPossible(scanner.Text())
+		text := leaveTextOrCoolifyIfPossible(scanner.Text())
 		fmt.Println(text)
 	}
+}
+
+func leaveTextOrCoolifyIfPossible(plainText string) string {
+	if !wantToCoolify() {
+		return plainText
+	}
+
+	return coolifyTextIfPossible(plainText)
 }
 
 func coolifyTextIfPossible(plainText string) string {
